@@ -73,9 +73,6 @@ namespace eAkreditimiWebAPI.Controllers
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 string retToken = tokenHandler.WriteToken(token);
 
-                // remove password before returning
-                //user.Password = null;
-
                 return Ok(retToken);
             }
             return Ok("authentication failed");
