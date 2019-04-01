@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eAkreditimiWebAPI.Infrastructure.Data;
 
 namespace e_AkreditimiWebAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190109172421_studytype added")]
+    partial class studytypeadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,13 +33,15 @@ namespace e_AkreditimiWebAPI.Infrastructure.Migrations
 
                     b.Property<int>("FacultyId");
 
-                    b.Property<string>("StaffId");
+                    b.Property<int>("StaffId");
+
+                    b.Property<string>("StaffId1");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FacultyId");
 
-                    b.HasIndex("StaffId");
+                    b.HasIndex("StaffId1");
 
                     b.ToTable("AcademicStaffCommitments");
                 });
@@ -51,8 +55,6 @@ namespace e_AkreditimiWebAPI.Infrastructure.Migrations
                     b.Property<string>("AcademicYear");
 
                     b.Property<int>("AccreditationTypeId");
-
-                    b.Property<DateTime?>("ApplicationDate");
 
                     b.Property<int>("MeetingId");
 
@@ -92,10 +94,6 @@ namespace e_AkreditimiWebAPI.Infrastructure.Migrations
                     b.Property<string>("ECTS");
 
                     b.Property<int>("EducationLevelId");
-
-                    b.Property<string>("Esac");
-
-                    b.Property<string>("EsacField");
 
                     b.Property<int>("FacultyId");
 
@@ -151,11 +149,11 @@ namespace e_AkreditimiWebAPI.Infrastructure.Migrations
 
                     b.Property<int>("ExercisesNum");
 
-                    b.Property<int>("LecturesNum");
-
                     b.Property<int>("PracticeNum");
 
-                    b.Property<string>("ProfessorId");
+                    b.Property<int>("ProfessorId");
+
+                    b.Property<string>("ProfessorId1");
 
                     b.Property<int>("ResearchNum");
 
@@ -167,7 +165,7 @@ namespace e_AkreditimiWebAPI.Infrastructure.Migrations
 
                     b.HasIndex("AccrSPId");
 
-                    b.HasIndex("ProfessorId");
+                    b.HasIndex("ProfessorId1");
 
                     b.HasIndex("SemesterId");
 
@@ -442,7 +440,7 @@ namespace e_AkreditimiWebAPI.Infrastructure.Migrations
 
                     b.HasOne("e_AkreditimiWebAPI.Infrastructure.Models.ApplicationUser", "Staff")
                         .WithMany("AcademicStaffCommitments")
-                        .HasForeignKey("StaffId");
+                        .HasForeignKey("StaffId1");
                 });
 
             modelBuilder.Entity("e_AkreditimiWebAPI.Infrastructure.Models.AccreditationApplication", b =>
@@ -490,7 +488,7 @@ namespace e_AkreditimiWebAPI.Infrastructure.Migrations
 
                     b.HasOne("e_AkreditimiWebAPI.Infrastructure.Models.ApplicationUser", "Professor")
                         .WithMany("AccrStudyProgrammesSubjects")
-                        .HasForeignKey("ProfessorId");
+                        .HasForeignKey("ProfessorId1");
 
                     b.HasOne("e_AkreditimiWebAPI.Infrastructure.Models.Semester", "Semester")
                         .WithMany("AccrStudyProgrammesSubjects")

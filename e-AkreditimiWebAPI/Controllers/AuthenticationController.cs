@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using e_AkreditimiWebAPI.Core.Services.Contract;
+using e_AkreditimiWebAPI.Infrastructure.Data.API_TestData;
 using e_AkreditimiWebAPI.Infrastructure.Models;
 using e_AkreditimiWebAPI.Infrastructure.Models.Authentication;
 using eAkreditimiWebAPI.Core.Services.API_TestDataService;
@@ -16,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace eAkreditimiWebAPI.Controllers
 {
@@ -86,11 +89,25 @@ namespace eAkreditimiWebAPI.Controllers
         }
 
         [HttpPost("arc/personalNumber/{personalNumber}")]
+        [AllowAnonymous]
         public IActionResult FindPersonByPersonalNumber([FromRoute] string personalNumber)
         {
-            var data = _apiService.GetARCData();
-            var user = data.FirstOrDefault(x => x.PersonalNumber == personalNumber);
+            var client = new HttpClient();
+            var response = client.GetAsync("http://127.0.0.1:3000/api/users/"+personalNumber).Result;
+            var content = response.Content.ReadAsStringAsync()
+                                       .Result
+                                       .Replace("\\", "")
+                                       .Trim(new char[1] { '"' });
+            var user = JsonConvert.DeserializeObject<ARC_API>(content);
             return Ok(user);
         }
+
+        [HttpGet("academic-staff")]
+        public IActionResult Clients()
+        {
+            var users = _authService.GetUsersByRole("AcademicStaff");
+            return Ok(users);
+        }
+
     }
 }

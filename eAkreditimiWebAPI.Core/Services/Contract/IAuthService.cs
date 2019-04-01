@@ -1,5 +1,6 @@
 ﻿using e_AkreditimiWebAPI.Infrastructure.Models;
 using e_AkreditimiWebAPI.Infrastructure.Models.Authentication;
+using e_AkreditimiWebAPI.Infrastructure.ViewModels;
 using eAkreditimiWebAPI.Core.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -20,5 +21,7 @@ namespace e_AkreditimiWebAPI.Core.Services.Contract
         ApplicationUser GetLoggedUser(string email);
 
         ApplicationUser GetUserById(string id);
+        IEnumerable<UserListViewModel> GetUsersByRole(string role);
+
     }
 }

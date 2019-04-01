@@ -1,11 +1,15 @@
 ﻿using e_AkreditimiWebAPI.Core.Services.Contract;
 using e_AkreditimiWebAPI.Infrastructure.Models;
 using e_AkreditimiWebAPI.Infrastructure.Models.Authentication;
+using e_AkreditimiWebAPI.Infrastructure.ViewModels;
 using eAkreditimiWebAPI.Core.Helpers.Implementation;
 using eAkreditimiWebAPI.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,6 +70,12 @@ namespace eAkreditimiWebAPI.Core.Services.Implementation
             throw new NotImplementedException();
         }
 
-        
+        public IEnumerable<UserListViewModel> GetUsersByRole(string role)
+        {
+            var role_param = new SqlParameter("@role", role ?? "");
+            var model = new List<UserListViewModel>();
+            model = _context.Query<UserListViewModel>().FromSql("[dbo].[usp_GetUsersByRole] @role", role_param).ToList();
+            return model;
+        }
     }
 }

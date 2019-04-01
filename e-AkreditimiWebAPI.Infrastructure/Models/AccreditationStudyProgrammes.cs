@@ -23,6 +23,9 @@ namespace e_AkreditimiWebAPI.Infrastructure.Models
         public Faculty Faculty { get; set; }
 
         public string DiplomaName { get; set; }
+        public string Esac { get; set; }
+        public string EsacField { get; set; }
+        public string StudyType { get; set; }        
         public int StudyDuration { get; set; }
         public int MaxNumber { get; set; }
 

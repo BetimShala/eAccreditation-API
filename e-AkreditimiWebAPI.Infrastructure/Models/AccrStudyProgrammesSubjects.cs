@@ -11,7 +11,7 @@ namespace e_AkreditimiWebAPI.Infrastructure.Models
         public int AccrSPId { get; set; }
         public AccreditationStudyProgrammes AccrSP { get; set; }
 
-        public int ProfessorId { get; set; }
+        public string ProfessorId { get; set; }
         public ApplicationUser Professor { get; set; }
 
         public string Description { get; set; }
@@ -25,6 +25,7 @@ namespace e_AkreditimiWebAPI.Infrastructure.Models
         public int ClinicNum { get; set; }
         public int PracticeNum { get; set; }
         public int ResearchNum { get; set; }
+        public int LecturesNum { get; set; }
         public string SubjectCode { get; set; }
 
     }

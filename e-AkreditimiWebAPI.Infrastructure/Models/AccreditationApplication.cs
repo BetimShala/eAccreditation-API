@@ -15,6 +15,7 @@ namespace e_AkreditimiWebAPI.Infrastructure.Models
         public DateTime? ValidFromDate { get; set; }
         public DateTime? ValidToDate { get; set; }
         public DateTime? VerdictDate { get; set; }
+        public DateTime? ApplicationDate { get; set; }
 
         public int VerdictId { get; set; }
         public Verdict Verdict { get; set; }

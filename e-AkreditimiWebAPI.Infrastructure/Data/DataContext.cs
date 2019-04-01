@@ -1,4 +1,5 @@
 ﻿using e_AkreditimiWebAPI.Infrastructure.Models;
+using e_AkreditimiWebAPI.Infrastructure.ViewModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,6 +27,9 @@ namespace eAkreditimiWebAPI.Infrastructure.Data
         public DbSet<University> Universities { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Semester> Semesters { get; set; }
-        
+
+        public DbQuery<UserListViewModel> UserListViewModel { get; set; }
+
+
     }
 }

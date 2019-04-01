@@ -15,14 +15,5 @@ namespace e_AkreditimiWebAPI.Infrastructure.Data.API_TestData
         public DateTime BirthDate { get; set; }
         public int CountryId { get; set; }
         public int MunicipalityId { get; set; }
-
-
-        //public ARC_API(
-        //    string FirstName, string LastName, string PersonalNumber, bool Gender, string MaidenName,string BirthPlace,
-        //    DateTime BirthDate,int CountryId,int MunicipalityId)
-        //{
-
-        //}
-        
     }
 }

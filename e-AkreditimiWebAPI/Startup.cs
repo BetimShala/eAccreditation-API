@@ -7,6 +7,7 @@ using e_AkreditimiWebAPI.Core.Services.Contract;
 using e_AkreditimiWebAPI.Infrastructure.Models;
 using eAkreditimiWebAPI;
 using eAkreditimiWebAPI.Core.Services.API_TestDataService;
+using eAkreditimiWebAPI.Core.Services.Contract;
 using eAkreditimiWebAPI.Core.Services.Implementation;
 using eAkreditimiWebAPI.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -51,6 +52,7 @@ namespace e_AkreditimiWebAPI
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAPIService, APIService>();
+            services.AddTransient<IAccreditationService,AccreditationService>();
 
             #endregion
 
