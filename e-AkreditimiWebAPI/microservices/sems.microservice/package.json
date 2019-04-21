@@ -1,0 +1,19 @@
+{
+  "name": "sems",
+  "version": "1.0.0",
+  "description": "This microservice is used to provide us some important information about subjects ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Betim Shala",
+  "license": "MIT",
+  "dependencies": {
+    "boom": "^7.3.0",
+    "fastify": "^2.3.0",
+    "fastify-swagger": "^2.3.2",
+    "mongoose": "^5.5.2",
+    "nodemon": "^1.18.11"
+  }
+}

@@ -10,7 +10,6 @@ using e_AkreditimiWebAPI.Core.Services.Contract;
 using e_AkreditimiWebAPI.Infrastructure.Data.API_TestData;
 using e_AkreditimiWebAPI.Infrastructure.Models;
 using e_AkreditimiWebAPI.Infrastructure.Models.Authentication;
-using eAkreditimiWebAPI.Core.Services.API_TestDataService;
 using eAkreditimiWebAPI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,19 +28,16 @@ namespace eAkreditimiWebAPI.Controllers
 
         private readonly IAuthService _authService;
         private readonly IOptions<AppSettings> _appSettings;
-        private readonly IAPIService _apiService;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthenticationController(
                     IAuthService authService,
                     IOptions<AppSettings> appSettings, 
-                    UserManager<ApplicationUser> userManager,
-                    IAPIService apiService)
+                    UserManager<ApplicationUser> userManager)
         {
             _authService = authService;
             _appSettings = appSettings;
             _userManager = userManager;
-            _apiService = apiService;
         }
 
 

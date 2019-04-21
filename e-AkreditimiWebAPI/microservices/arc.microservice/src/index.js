@@ -10,12 +10,18 @@ fastify.get('/', async (request, reply) => {
 routes.forEach((route, index) => {
     fastify.route(route);
 })
+
+const swagger = require('./config/swagger')
+// Register Swagger
+fastify.register(require('fastify-swagger'), swagger.options)
+
 // Run the server!
 const start = async () => {
     try {
         await fastify.listen(3000, '0.0.0.0', function() {
             console.log('Listening to port:  ' + 3000);
         });
+        fastify.swagger()
         fastify.log.info(`Server listening on ${fastify.server.address().port}`)
     } catch (err) {
         fastify.log.error(err)

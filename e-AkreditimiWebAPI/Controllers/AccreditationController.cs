@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using e_AkreditimiWebAPI.Infrastructure.Models;
+using e_AkreditimiWebAPI.Infrastructure.Models.API_Models;
 using e_AkreditimiWebAPI.Infrastructure.ViewModels;
 using eAkreditimiWebAPI.Core.Services.Contract;
 using Microsoft.AspNetCore.Http;
@@ -77,7 +79,7 @@ namespace eAkreditimiWebAPI.Controllers
             catch(Exception e)
             {
                 Debug.WriteLine(e.Message);
-                return Ok(false);
+                return Ok(new { e.InnerException.Message });
             }
         }
 
@@ -91,6 +93,19 @@ namespace eAkreditimiWebAPI.Controllers
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 }));
+        }
+
+        [HttpPost("sems/subjects")]
+        public IActionResult GetSubjectsFromSems([FromBody] SEMS_API data)
+        {
+            var client = new HttpClient();
+            var response = client.GetAsync(string.Format("http://127.0.0.1:3100/api/subjects?facultyId={0}&educationLevelId={1}",data.FacultyId,data.EducationLevelId)).Result;
+            var content = response.Content.ReadAsStringAsync()
+                                       .Result
+                                       .Replace("\\", "")
+                                       .Trim(new char[1] { '"' });
+            var subjects = JsonConvert.DeserializeObject<List<SEMS_API>>(content);
+            return Ok(subjects);
         }
     }
 }

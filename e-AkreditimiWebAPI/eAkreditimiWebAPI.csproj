@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="microservices\sems.microservice\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
