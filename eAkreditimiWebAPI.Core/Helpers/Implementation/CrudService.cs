@@ -15,52 +15,52 @@ namespace eAkreditimiWebAPI.Core.Helpers.Implementation
 
         public TEntity Add(TEntity entity)
         {
-            __THIS__.Add(entity);
+            This.Add(entity);
             Save();
             return entity;
         }
 
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            __THIS__.AddRange(entities);
+            This.AddRange(entities);
             Save();
         }
 
-        public TEntity Get(int id) => __THIS__.Find(id);
+        public TEntity Get(int id) => This.Find(id);
 
 
-        public IEnumerable<TEntity> GetAll() => __THIS__.ToList();
+        public IEnumerable<TEntity> GetAll() => This.ToList();
 
 
-        public IEnumerable<TEntity> GetWhere(Expression<Func<TEntity, bool>> predicate) => __THIS__.Where(predicate);
+        public IEnumerable<TEntity> GetWhere(Expression<Func<TEntity, bool>> predicate) => This.Where(predicate);
 
 
         public void Remove(TEntity entity)
         {
-            __THIS__.Remove(entity);
+            This.Remove(entity);
             Save();
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            __THIS__.RemoveRange(entities);
+            This.RemoveRange(entities);
             Save();
         }
 
         public void Update(TEntity entity)
         {
-            __THIS__.Update(entity);
+            This.Update(entity);
             Save();
         }
 
         public void UpdateRange(IEnumerable<TEntity> entities)
         {
-            __THIS__.UpdateRange(entities);
+            This.UpdateRange(entities);
             Save();
         }
         public TEntity UpdateAndGet(TEntity entity)
         {
-            var ret = __THIS__.Update(entity);
+            var ret = This.Update(entity);
             Save();
             return ret.Entity;
         }

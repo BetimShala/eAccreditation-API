@@ -19,7 +19,7 @@ namespace eAkreditimiWebAPI.Core.Services.Implementation
 
         public IEnumerable<AccreditationApplication> GetAccreditationApplications()
         {
-            var result = __THIS__.Include(a=>a.AccreditationStudyProgrammes).Include(a => a.Verdict).Include(a => a.University).Include(a => a.AccreditationType);
+            var result = This;
             return result;
         }
 

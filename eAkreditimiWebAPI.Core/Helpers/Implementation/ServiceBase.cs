@@ -19,7 +19,7 @@ namespace eAkreditimiWebAPI.Core.Helpers.Implementation
 
         public TEntity Add(TEntity entity)
         {
-            __THIS__.Add(entity);
+            This.Add(entity);
             Save();
             return entity;
         }
@@ -27,57 +27,57 @@ namespace eAkreditimiWebAPI.Core.Helpers.Implementation
 
         public async Task AddAsync(TEntity entity)
         {
-            await __THIS__.AddAsync(entity);
+            await This.AddAsync(entity);
             await SaveAsync();
         }
 
 
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            __THIS__.AddRange(entities);
+            This.AddRange(entities);
             Save();
         }
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            await __THIS__.AddRangeAsync(entities);
+            await This.AddRangeAsync(entities);
             await SaveAsync();
         }
 
-        public TEntity Get(int id) => __THIS__.Find(id);
+        public TEntity Get(int id) => This.Find(id);
 
 
-        public IEnumerable<TEntity> GetAll() => __THIS__.ToList();
+        public IEnumerable<TEntity> GetAll() => This.ToList();
 
 
-        public async Task<TEntity> GetAsync(int id) => await __THIS__.FindAsync(id);
+        public async Task<TEntity> GetAsync(int id) => await This.FindAsync(id);
 
 
-        public IEnumerable<TEntity> GetWhere(Expression<Func<TEntity, bool>> predicate) => __THIS__.Where(predicate);
+        public IEnumerable<TEntity> GetWhere(Expression<Func<TEntity, bool>> predicate) => This.Where(predicate);
 
 
         public void Remove(TEntity entity)
         {
-            __THIS__.Remove(entity);
+            This.Remove(entity);
             Save();
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            __THIS__.RemoveRange(entities);
+            This.RemoveRange(entities);
             
             Save();
         }
 
         public void Update(TEntity entity)
         {
-            __THIS__.Update(entity);
+            This.Update(entity);
             Save();
         }
 
         public TEntity UpdateAndGet(TEntity entity)
         {
-            var ret = __THIS__.Update(entity);
+            var ret = This.Update(entity);
             Save();
             return ret.Entity;
 
@@ -85,7 +85,7 @@ namespace eAkreditimiWebAPI.Core.Helpers.Implementation
 
         public void UpdateRange(IEnumerable<TEntity> entities)
         {
-            __THIS__.UpdateRange(entities);
+            This.UpdateRange(entities);
             Save();
         }
 

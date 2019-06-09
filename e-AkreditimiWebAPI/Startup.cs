@@ -39,6 +39,7 @@ namespace e_AkreditimiWebAPI
         {
 
             #region APPLICATION CONFIGURATION SERVICES
+            services.AddHttpClient();
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDefaultIdentity<ApplicationUser>()
@@ -81,6 +82,7 @@ namespace e_AkreditimiWebAPI
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
+
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,

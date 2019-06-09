@@ -18,7 +18,7 @@ namespace eAkreditimiWebAPI.Core.Helpers.Implementation
 
 
 
-        protected DbSet<TEntity> __THIS__ => _context.Set<TEntity>();
+        protected DbSet<TEntity> This => _context.Set<TEntity>();
 
         protected void Save()
         {

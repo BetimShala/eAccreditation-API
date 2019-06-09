@@ -19,9 +19,13 @@ namespace eAkreditimiWebAPI.Controllers
     public class AccreditationController : ControllerBase
     {
         private readonly IAccreditationService _accreditationService;
-        public AccreditationController(IAccreditationService accreditationService)
+        IHttpClientFactory _clientFactory;
+
+        public AccreditationController(IAccreditationService accreditationService, IHttpClientFactory clientFactory)
         {
             _accreditationService = accreditationService;
+            _clientFactory = clientFactory;
+
         }
 
         [HttpGet("all")]
@@ -29,10 +33,12 @@ namespace eAkreditimiWebAPI.Controllers
         {
             var accreditationsList = _accreditationService.GetAccreditationApplications();
             return Ok(JsonConvert.SerializeObject(accreditationsList,
-                Formatting.Indented,
                 new JsonSerializerSettings()
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    Formatting = Formatting.Indented,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.Arrays
                 }));
             
         }
@@ -42,10 +48,12 @@ namespace eAkreditimiWebAPI.Controllers
         {
             var programmes = _accreditationService.GetProgrammes(id);
             return Ok(JsonConvert.SerializeObject(programmes,
-               Formatting.Indented,
                new JsonSerializerSettings()
                {
-                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                   Formatting = Formatting.Indented,
+                   NullValueHandling = NullValueHandling.Ignore,
+                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                   PreserveReferencesHandling = PreserveReferencesHandling.Arrays
                }));
         }
 
@@ -88,24 +96,29 @@ namespace eAkreditimiWebAPI.Controllers
         {
             var subjects = _accreditationService.GetAccrStudyProgrammes(id);
             return Ok(JsonConvert.SerializeObject(subjects,
-                Formatting.Indented,
                 new JsonSerializerSettings()
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    Formatting = Formatting.Indented,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.Arrays
                 }));
         }
 
         [HttpPost("sems/subjects")]
-        public IActionResult GetSubjectsFromSems([FromBody] SEMS_API data)
+        public async Task<IActionResult> GetSubjectsFromSems([FromBody] SEMS_API data)
         {
-            var client = new HttpClient();
-            var response = client.GetAsync(string.Format("http://127.0.0.1:3100/api/subjects?facultyId={0}&educationLevelId={1}",data.FacultyId,data.EducationLevelId)).Result;
-            var content = response.Content.ReadAsStringAsync()
-                                       .Result
-                                       .Replace("\\", "")
-                                       .Trim(new char[1] { '"' });
-            var subjects = JsonConvert.DeserializeObject<List<SEMS_API>>(content);
-            return Ok(subjects);
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"http://127.0.0.1:3100/api/subjects?facultyId={data.FacultyId}&educationLevelId={data.EducationLevelId}");
+            request.Headers.Add("Accept", "application/json");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok(await response.Content
+                    .ReadAsAsync<IEnumerable<SEMS_API>>());
+            }
+            return Ok(null);
         }
     }
 }

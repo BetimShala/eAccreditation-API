@@ -13,16 +13,16 @@ namespace eAkreditimiWebAPI.Core.Helpers.Implementation
 
         public async Task AddAsync(TEntity entity)
         {
-            await __THIS__.AddAsync(entity);
+            await This.AddAsync(entity);
             await SaveAsync();
         }
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            await __THIS__.AddRangeAsync(entities);
+            await This.AddRangeAsync(entities);
             await SaveAsync();
         }
 
-        public async Task<TEntity> GetAsync(int id) => await __THIS__.FindAsync(id);
+        public async Task<TEntity> GetAsync(int id) => await This.FindAsync(id);
     }
 }

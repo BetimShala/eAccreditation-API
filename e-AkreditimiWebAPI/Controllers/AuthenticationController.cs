@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -29,14 +30,17 @@ namespace eAkreditimiWebAPI.Controllers
         private readonly IAuthService _authService;
         private readonly IOptions<AppSettings> _appSettings;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHttpClientFactory _clientFactory;
 
         public AuthenticationController(
                     IAuthService authService,
-                    IOptions<AppSettings> appSettings, 
+                    IOptions<AppSettings> appSettings,
+                    IHttpClientFactory clientFactory,
                     UserManager<ApplicationUser> userManager)
         {
             _authService = authService;
             _appSettings = appSettings;
+            _clientFactory = clientFactory;
             _userManager = userManager;
         }
 
@@ -86,23 +90,40 @@ namespace eAkreditimiWebAPI.Controllers
 
         [HttpPost("arc/personalNumber/{personalNumber}")]
         [AllowAnonymous]
-        public IActionResult FindPersonByPersonalNumber([FromRoute] string personalNumber)
+        public async Task<IActionResult> FindPersonByPersonalNumber([FromRoute] string personalNumber)
         {
-            var client = new HttpClient();
-            var response = client.GetAsync("http://127.0.0.1:3000/api/users/"+personalNumber).Result;
-            var content = response.Content.ReadAsStringAsync()
-                                       .Result
-                                       .Replace("\\", "")
-                                       .Trim(new char[1] { '"' });
-            var user = JsonConvert.DeserializeObject<ARC_API>(content);
-            return Ok(user);
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:3000/api/users/{personalNumber}");
+            request.Headers.Add("Accept", "application/json");
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok(await response.Content
+                    .ReadAsAsync<ARC_API>());
+            }
+            return Ok(null);
         }
 
         [HttpGet("academic-staff")]
         public IActionResult Clients()
         {
             var users = _authService.GetUsersByRole("AcademicStaff");
-            return Ok(users);
+            return Ok(users);   
+        }
+
+        //[HttpGet("users")
+        //public async Task<IActionResult> GetAllUsers()
+        //{
+        //    return Ok(await _userManager.Users.ToListAsync());
+        //}
+
+        public string GetLastName()
+        {
+            var fullName = "Steve J Gordon";
+            var names = fullName.Split(" ");
+            var lastName = names.LastOrDefault();
+            return lastName ?? string.Empty;
         }
 
     }
