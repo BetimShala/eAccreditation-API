@@ -86,7 +86,6 @@ namespace eAkreditimiWebAPI.Controllers
             }
             catch(Exception e)
             {
-                Debug.WriteLine(e.Message);
                 return Ok(new { e.InnerException.Message });
             }
         }
